@@ -15,7 +15,7 @@ This repository contains a suite of docker images to quickly deploy and configur
 
 If you want to change chains, I believe you can do so by stopping the containers, deleting or renaming the two data folders (follower-data and postgresql-data), changing the chain in the .env file, and then use docker compose with the --build flag, i.e.
 
-```docker compose up -d --build```
+```./up -d --build```
 
 This is currently untested.
 
@@ -44,10 +44,28 @@ This is currently untested.
 ```./config.sh```
 >
 
-5. Launch the containers using docker compose
-```docker compose up -d```
+5. Rename `conduit.yml.final` to `conduit.yml`
+```mv conduit.yml.final conduit.yml```
 >
+
+6. Launch the containers with docker compose using the `up` utility script, i.e.
+```./up -d```
+>
+
+7. NOTE: The postgres database init doesn't work due to this issue: https://github.com/xarmian/avm-indexer-suite/issues/2 to fix this, shutdown the containers by running `./down` and then `chmod` the postgresql-data folder to your current user, i.e.
+
+```
+./down -d
+sudo chown -R $(id -un):$(id -gn) ./postgresql-data
+./up -d
+```
+
+Then in the future you can stop and start the services using `./down -d` and `./up -d`
 
 # Disclaimer
 
 This image is supplied without warranty.
+
+# License
+
+MIT License. See LICENSE file.

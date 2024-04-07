@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Initialize flags
+build=
+nginx=
+
+# Parse command line arguments
+for arg in "$@"
+do
+    case $arg in
+        --build)
+            build=1
+            shift # Remove --build from processing
+            ;;
+        --nginx)
+            nginx=1
+            shift # Remove --nginx from processing
+            ;;
+    esac
+done
+
+echo "Starting Algod, Postgres, Conduit, Indexer"
+if [ "$build" = "1" ]; then
+    docker compose up -d --build
+else
+    docker compose up -d
+fi
+
+if [ "$nginx" = "1" ]; then
+    echo "Starting Nginx, Acme"
+    docker compose -f docker-compose-nginx.yml up -d
+fi
+
