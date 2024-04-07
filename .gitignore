@@ -1,0 +1,6 @@
+.env
+conduit.yml
+follower-data
+postgresql-data
+data
+

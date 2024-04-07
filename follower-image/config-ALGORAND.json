@@ -1,0 +1,6 @@
+{
+	"EndpointAddress": "0.0.0.0:8080",
+	"EnableFollowMode": true,
+	"CatchupParallelBlocks": 64,
+	"MaxAcctLookback": 64
+}

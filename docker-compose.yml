@@ -1,0 +1,113 @@
+services:
+  algod:
+    build:
+      context: ./follower-image
+      dockerfile: ./Dockerfile
+      args:
+        CHAIN: ${CHAIN}
+    image: "xarmian/voit-follower"
+    container_name: voit-follower
+    volumes:
+     - ./follower-data:/algod/data
+    environment:
+     - NETWORK=${NETWORK}
+     - TOKEN=${TOKEN}
+     - ADMIN_TOKEN=${ADMIN_TOKEN}
+    restart: unless-stopped
+    networks:
+     - voi-idx
+
+  indexer-db:
+    image: postgres:14-alpine
+    container_name: voit-postgres
+    volumes:
+      - ./postgresql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+    restart: unless-stopped
+    networks:
+     - voi-idx
+
+  conduit:
+    image: algorand/conduit
+    container_name: voit-conduit
+    volumes:
+     - ./conduit.yml:/etc/algorand/conduit.yml
+    restart: unless-stopped
+    networks:
+     - voi-idx
+    depends_on:
+     - algod
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:1.5.1
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    environment:
+      - ENABLE_IPV6=true
+    networks:
+      - nginx-proxy
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: acme-companion
+    restart: unless-stopped
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DEFAULT_EMAIL=${LETSENCRYPT_EMAIL}
+    networks:
+      - nginx-proxy
+
+  indexer:
+    container_name: voit-indexer
+    image: algorand/indexer
+    expose:
+     - 8980
+    environment:
+      PORT: "8980"
+      INDEXER_POSTGRES_CONNECTION_STRING: "host=voit-postgres port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB} sslmode=disable"
+      INDEXER_ENABLE_ALL_PARAMETERS: "true"
+      INDEXER_DATA: "/data"
+      INDEXER_API_TOKEN: "${INDEXER_API_TOKEN}"
+      VIRTUAL_HOST: "${VIRTUAL_HOST}"
+      LETSENCRYPT_HOST: "${VIRTUAL_HOST}"
+    restart: unless-stopped
+    networks:
+     - voi-idx
+     - nginx-proxy
+    command: daemon --data-dir /data
+    volumes:
+     - ./indexer.yml:/data/indexer.yml
+    depends_on:
+      - algod
+      - indexer-db
+      - nginx-proxy
+
+networks:
+  voi-idx: {}
+  nginx-proxy: {}
+
+volumes:
+  conf: {}
+  vhost: {}
+  html: {}
+  dhparam: {}
+  certs: {}
+  acme: {}
