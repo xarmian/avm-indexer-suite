@@ -1,8 +1,8 @@
 # AVM Indexer Suite
 
-Note: In this current stage this is not going to be operational because I'm making breaking changes constantly and may not commit updates very often, so don't waste your time yet. This message will be removed when it's generally stable. The best way to get assistance or let me know you'd like to see an update is to either comment here (on GitHub) or find me in the Voi Discord (https://discord.gg/vnFbrJrHeW). This message will be removed once I think it's relatively usable.
+Note: In this current stage this is not going to be operational because I'm making breaking changes constantly and may not commit updates very often, so don't waste your time yet. This message will be removed when it's generally stable. The best way to get assistance or let me know you'd like to see an update is to either comment here (on GitHub) or find me (#xarmian) in the Voi Discord (https://discord.gg/vnFbrJrHeW). This message will be removed once I think it's relatively usable.
 
-This repository borrows stuff from a bunch of more official repositories and combines them into what I think is a highly automated method to deploy all the pieces as microservices. It's not reinventing the wheel, though and there's really not much to it.
+This repository borrows stuff from a bunch of more official repositories and combines them into what I think is a highly automated method to deploy all the pieces as microservices. It's not reinventing the wheel, though. Also there's not a whole lot to it. This is just meant to streamline the process.
 
 ---
 
@@ -75,7 +75,7 @@ Then in the future you can stop and start the services using `./down` and `./up`
 
 # Disclaimer
 
-This image is supplied without warranty.
+This repository is supplied without warranty.
 
 # License
 
