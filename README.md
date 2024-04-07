@@ -2,6 +2,8 @@
 
 Note: In this current stage this is not going to be operational because I'm making breaking changes constantly and may not commit updates very often, so don't waste your time yet. This message will be removed when it's generally stable. The best way to get assistance or let me know you'd like to see an update is to either comment here (on GitHub) or find me in the Voi Discord (https://discord.gg/vnFbrJrHeW). This message will be removed once I think it's relatively usable.
 
+This repository borrows stuff from a bunch of more official repositories and combines them into what I think is a highly automated method to deploy all the pieces as microservices. It's not reinventing the wheel, though and there's really not much to it.
+
 ---
 
 This repository contains a suite of docker images to quickly deploy and configure an Algorand-based indexer, by launching the following containers:
