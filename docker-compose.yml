@@ -13,9 +13,13 @@ services:
      - NETWORK=${NETWORK}
      - TOKEN=${TOKEN}
      - ADMIN_TOKEN=${ADMIN_TOKEN}
+     - VIRTUAL_HOST=${NODE_VIRTUAL_HOST}
+     - VIRTUAL_PORT=8080
+     - LETSENCRYPT_HOST=${NODE_VIRTUAL_HOST}
     restart: unless-stopped
     networks:
      - voi-idx
+     - nginx-proxy
 
   indexer-db:
     image: postgres:14-alpine
@@ -52,8 +56,8 @@ services:
       INDEXER_ENABLE_ALL_PARAMETERS: "true"
       INDEXER_DATA: "/data"
       INDEXER_API_TOKEN: "${INDEXER_API_TOKEN}"
-      VIRTUAL_HOST: "${VIRTUAL_HOST}"
-      LETSENCRYPT_HOST: "${VIRTUAL_HOST}"
+      VIRTUAL_HOST: "${INDEXER_VIRTUAL_HOST}"
+      LETSENCRYPT_HOST: "${INDEXER_VIRTUAL_HOST}"
     restart: unless-stopped
     networks:
      - voi-idx
