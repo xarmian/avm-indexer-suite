@@ -44,15 +44,11 @@ This is currently untested.
 - `LETSENCRYPT_EMAIL` - Email to receive notifications for Letsencrypt certificate, such as expiration notifications
 >
 
-4. Run config.sh to generate your conduit.yml file
-```./config.sh```
+4. Run config.sh to generate your conduit.yml file.
+```./config-conduit.sh```
 >
 
-5. Rename `conduit.yml.final` to `conduit.yml`
-```mv conduit.yml.final conduit.yml```
->
-
-6. Launch the four core containers with docker compose using the `up` utility script, i.e.
+5. Launch the four core containers with docker compose using the `up` utility script, i.e.
 ```
 ./up
 ```
@@ -63,7 +59,7 @@ on the host server's ports 80 and 443 use the `--nginx` flag:
 ./up --nginx
 ```
 
-7. NOTE: The postgres database init doesn't work due to this issue: https://github.com/xarmian/avm-indexer-suite/issues/2 to fix this, shutdown the containers by running `./down` and then `chmod` the postgresql-data folder to your current user, i.e.
+6. NOTE: The postgres database init doesn't work due to this issue: https://github.com/xarmian/avm-indexer-suite/issues/2 to fix this, shutdown the containers by running `./down` and then `chmod` the postgresql-data folder to your current user, i.e.
 
 ```
 ./down
