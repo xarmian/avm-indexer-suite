@@ -19,9 +19,18 @@ do
     esac
 done
 
+# Determine config file based on NETWORK in .env
+source .env
+if [[ "$NETWORK" == "voitest-v1.0" || "$NETWORK" == "voimain-v1.0" ]]; then
+    export CONFIG_FILE="config-${NETWORK}.json"
+else
+    export CONFIG_FILE="config-ALGORAND.json"
+fi
+
 echo "Starting Algod, Postgres, Conduit, Indexer"
 if [ "$build" = "1" ]; then
-    docker compose up -d --build
+    docker compose build --build-arg CONFIG_FILE=$CONFIG_FILE
+    docker compose up -d
 else
     docker compose up -d
 fi

@@ -2,9 +2,10 @@
 FROM algorand/algod:latest
 
 ARG NETWORK
+ARG CONFIG_FILE
 
-# Conditionally copy config.json based on network
-COPY ./config-$([[ "$NETWORK" == "voitest-v1.0" || "$NETWORK" == "voimain-v1.0" ]] && echo "$NETWORK" || echo "ALGORAND").json /etc/algorand/config.json
+# Copy the appropriate config file
+COPY ./${CONFIG_FILE} /etc/algorand/config.json
 COPY ./genesis-voi-testnet.json /node/run/genesis/voitest-v1.0/genesis.json
 COPY ./genesis-voi-mainnet.json /node/run/genesis/voimain-v1.0/genesis.json
 
