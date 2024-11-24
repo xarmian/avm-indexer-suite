@@ -4,7 +4,7 @@ services:
       context: ./follower-image
       dockerfile: ./Dockerfile
       args:
-        CHAIN: ${CHAIN}
+        NETWORK: ${NETWORK}
     image: "xarmian/voit-follower"
     container_name: voit-follower
     volumes:
