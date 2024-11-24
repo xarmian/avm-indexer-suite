@@ -1,7 +1,0 @@
-{
-	"EndpointAddress": "0.0.0.0:8080",
-	"DNSBootstrapID": "<network>.voi.network",
-	"EnableFollowMode": true,
-	"CatchupParallelBlocks": 64,
-	"MaxAcctLookback": 64
-}

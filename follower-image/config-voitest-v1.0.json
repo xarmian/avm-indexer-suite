@@ -1,0 +1,7 @@
+{
+	"EndpointAddress": "0.0.0.0:8080",
+	"DNSBootstrapID": "<network>.testnet-voi.network?backup=<network>.testnet-voi.net&dedup=<name>.testnet-voi.(network|net)",
+	"EnableFollowMode": true,
+	"CatchupParallelBlocks": 64,
+	"MaxAcctLookback": 64
+}

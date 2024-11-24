@@ -32,8 +32,7 @@ This is currently untested.
 >
 
 3. Copy `env.sample` to `.env` and configure. Configuration options are as follows:
-- `CHAIN` - AVM Chain to use, either `VOI` or `ALGORAND`
-- `NETWORK` - The network name, i.e. `voitest-v1` for Voi, or `mainnet`, `testnet`, etc. for Algorand
+- `NETWORK` - The network name, i.e. `voitest-v1.0` for Voi Testnet, 'voimain-v1.0' for Voi Mainnet, or `mainnet`, `testnet`, `betanet` for Algorand
 - `INDEXER_API_TOKEN` - API Token used to authenticate Indexer endpoint queries
 - `TOKEN` - API Token used to authenticate Algod endpoint queries
 - `ADMIN_TOKEN` - Algod Admin Token
